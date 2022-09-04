@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert'; //jsonDecode를 사용할 수 있게 해줌
+import 'package:weather_app/data/my_location.dart';
+import 'package:weather_app/data/network.dart';
+import 'package:weather_app/screens/weather_screen.dart';
+const apiKey = '9f79e9db0d0d1d2a13edc476acebfcc6';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -13,32 +14,40 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
+  double? latitude3;
+  double? longitude3;
+
   @override
-  void initState(){
+  void initState(){ //initState로 한번 초기화 하면서 두 함수를 실행
     super.initState();
     getLocation();
-    feachData();
   }
 
   void getLocation() async {
-    try {
-      Position position = await Geolocator.
-      getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print(position);
-    }catch(e){
-      print('인터넷 연결에 문제가 생겼습니다.');
-    }
+    MyLocation myLocation = MyLocation();
+    await myLocation.getMyCurrentLocation();
+    latitude3 = myLocation.latitude2;
+    longitude3 = myLocation.longitude2;
+    print(latitude3);
+    print(longitude3);
+    
+    Network network = Network('https://api.openweathermap.org/data/2.5/weather?'
+        'lat=$latitude3&lon=$longitude3&appid=$apiKey&units=metric');
+
+    var weatherData = await network.getJsonData(); //api 정보들을 weatherData에 저장
+    print(weatherData);
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return WeatherScreen(parseWeatherData: weatherData); //api로 받아온 정보들을 넘겨줌
+    }));
   }
 
-  void feachData() async{
-    http.Response response = await http.get(Uri.parse('https://samples.openweathermap.org/data/2.5/weather?'
-        'q=London&appid=b1b15e88fa797225412429c1c50c122a1'));
-    if(response.statusCode == 200){
-      String jsonData = response.body;
-      var myJson = jsonDecode(jsonData)['weather'][0]['description'];
+  /*void feachData() async{
+      var myJson = parsingData['weather'][0]['description'];
       print(myJson);
+    }else{
+      print(response.statusCode);
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
