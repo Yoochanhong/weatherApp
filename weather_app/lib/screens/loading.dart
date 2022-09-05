@@ -6,7 +6,6 @@ import 'package:weather_app/screens/weather_screen.dart';
 const apiKey = '9f79e9db0d0d1d2a13edc476acebfcc6';
 
 class Loading extends StatefulWidget {
-  const Loading({Key? key}) : super(key: key);
 
   @override
   State<Loading> createState() => _LoadingState();
@@ -14,8 +13,8 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
-  double? latitude3;
-  double? longitude3;
+  double latitude3;
+  double longitude3;
 
   @override
   void initState(){ //initState로 한번 초기화 하면서 두 함수를 실행

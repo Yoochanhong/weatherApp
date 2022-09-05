@@ -15,16 +15,16 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  String? cityName;
-  int? temp;
-  Widget? icon;
-  String? des;
+  String cityName;
+  int temp;
+  Widget icon;
+  String des;
   var date = DateTime.now();
   Model model = Model();
-  Widget? airIcon;
-  Widget? airstate;
-  double? dust;
-  double? microdust;
+  Widget airIcon;
+  Widget airstate;
+  double dust;
+  double microdust;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     print(temp);
   }
 
-  String? getSystemTime(){
+  String getSystemTime(){
     var now = DateTime.now();
     return DateFormat("h:mm a").format(now);
   }
@@ -146,7 +146,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '$temp\u2103',
+                              '$temp\u{00AB}C',
                               style: GoogleFonts.lato(
                                   fontSize: 85.0,
                                   fontWeight: FontWeight.w300,
@@ -155,7 +155,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             ),
                             Row(
                               children: <Widget>[
-                                icon!,
+                                icon,
                                 SizedBox(
                                   width: 10.0,
                                 ),
@@ -193,11 +193,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               SizedBox(
                                 height: 10.0,
                               ),
-                              airIcon!,
+                              airIcon,
                               SizedBox(
                                 height: 10.0,
                               ),
-                              airstate!,
+                              airstate,
                             ],
                           ),
                           Column(
