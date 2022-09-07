@@ -146,7 +146,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '$temp\u{00AB}C',
+                              '$temp\u00ABC',
                               style: GoogleFonts.lato(
                                   fontSize: 85.0,
                                   fontWeight: FontWeight.w300,
